@@ -14,9 +14,9 @@ function throttling(fn, delay){
 // cutom leading and trailig . 
 
 
-// window.addEventListener("mousemove", throttling((e) => {
-//     console.log("mousemove event called", e.x, " ", e.y);
-// }, 1000))
+window.addEventListener("mousemove", throttling((e) => {
+    console.log("mousemove event called", e.x, " ", e.y);
+}, 1000))
 
 // inbuilt throttle method is present in lodash library 
 
@@ -66,3 +66,24 @@ throttled.cance();
 //         const remainig = wait - (now - previous);
 //     }
 // }
+
+
+// polyfill for Map 
+
+
+let array = [10,20,30,40,50];
+
+array.map((item) => item*2); //[20,40,60,80,100];
+array.myMap((item) => item*2); //[20,40,60,80,100]; returned an array 
+
+Array.prototype.myMap = function (fn) {
+    const arr = this;
+    const result =[];
+    //traverse over array 
+    for(let i=0;i<arr.length;i++){
+        let item = arr[i];
+        result.push(fn(item))
+    }
+    //return array 
+    return result;
+}

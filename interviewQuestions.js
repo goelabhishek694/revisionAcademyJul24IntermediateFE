@@ -197,16 +197,110 @@
 
 //we want no extra brakcets for function call
 
-function sum(a) {
-  let total = a;
-  function inner(b) {
-    // if(b==undefined) return total
-    total += b;
-    return inner;
-  }
+// function sum(a) {
+//   let total = a;
+//   function inner(b) {
+//     // if(b==undefined) return total
+//     total += b;
+//     return inner;
+//   }
 
-  inner.toString = () => total;
-  inner.valueOf = () => total;
-  return inner;
+//   inner.toString = () => total;
+//   inner.valueOf = () => total;
+//   return inner;
+// }
+// console.log(+sum(1)(2)(3));
+// console.log(sum(1)(2)(3)+0);
+// console.log(sum(1)(2)(3).toString());
+
+
+//17th ques
+
+function curry(fn){
+  return function curried(...args){
+    if(args.length >= fn.length){
+      return fn.apply(this, args)
+    }else{
+      return function(...next){
+        return curried.apply(this, args.concat(next));
+      }
+    }
+  }
 }
-console.log(sum(1)(2)(3));
+
+function add(a,b,c){
+  return a+b+c;
+}
+
+const curriedAdd = curry(add);
+console.log(curriedAdd(1)(2)(3)); //6
+
+//figure out using dryn run , debugger mode 
+
+
+//18th Ques 
+// You are given an array of user purchase records in the following format:
+
+const purchases = [
+  { userId: 1, name: 'Alice', item: 'Book', price: 250 },
+  { userId: 2, name: 'Bob', item: 'Pen', price: 50 },
+  { userId: 1, name: 'Alice', item: 'Notebook', price: 100 },
+  { userId: 3, name: 'Charlie', item: 'Laptop', price: 50000 },
+  { userId: 2, name: 'Bob', item: 'Pencil', price: 20 },
+  { userId: 3, name: 'Charlie', item: 'Mouse', price: 800 },
+];
+// Write a function that returns an array of user summaries in this format:
+
+// [
+//   { name: 'Alice', totalSpent: 350, itemsBought: 2 },
+//   { name: 'Bob', totalSpent: 70, itemsBought: 2 },
+//   { name: 'Charlie', totalSpent: 50800, itemsBought: 2 }
+// ]
+
+//1st approach 
+
+const userIds = [...new Set(purchases.map(obj=>obj.userId))]; //unique uarray of all users ids 
+
+const summaries = userIds.map(userId => {
+  const userPurchase = purchases.filter(obj => obj.userId==userId);
+  const totalSpent = userPurchase.reduce((acc,curr) => {
+    return acc + curr.price;
+  },0)
+  const itemsBought = userPurchase.length;
+  const name = userPurchase[0].name;
+  return {name, totalSpent, itemsBought}
+});
+
+console.log(summaries);
+
+// tc => O(n*u) n = purchases u => uniqye users 
+
+//2nd approach 
+
+const summariesMap = purchases.reduce((acc,curr) => {
+  if(!acc[curr.userId]){
+    acc[curr.userId]= {name: curr.name, totalSpent: 0, itemsBought:0}
+  }
+  acc[curr.userId].totalSpent += curr.price;
+  acc[curr.userId].itemsBought += 1;
+  return acc;
+}, {})
+
+console.log(summariesMap);
+
+const finalAns = Object.values(summariesMap);
+console.log(finalAns);
+
+
+
+// {
+//   "1" : {name: "Alice", totalSpent: 350, itemsBought:2}
+//   "2" : {name: "Bob", totalSpent: 70, itemsBought:2}
+//   "3" : {name: "Charlie", totalSpent: 5800, itemsBought:2}
+
+// }
+
+
+
+
+// O(n) n = number of purchases 

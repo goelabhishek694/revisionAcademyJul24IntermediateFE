@@ -1,53 +1,53 @@
 //1st question
-function sayHi() {
-    console.log(name);
-    console.log(age);
-    var name = 'Suraj';
-    let age = 21;
-}
-  
-  sayHi();
-  
+// function sayHi() {
+//     console.log(name);
+//     console.log(age);
+//     var name = 'Suraj';
+//     let age = 21;
+// }
+
+//   sayHi();
+
 // answer - undefined, error
 
 //2nd question
 
-for (var i = 0; i < 3; i++) {
-    setTimeout(() => console.log(i), 1); 
-  }
-  
-  for (let i = 0; i < 3; i++) {
-    //copy of i is created . i=0 , i=1 , i=2 
-    setTimeout(() => console.log(i), 1);
-  }
+// for (var i = 0; i < 3; i++) {
+//     setTimeout(() => console.log(i), 1);
+//   }
+
+//   for (let i = 0; i < 3; i++) {
+//     //copy of i is created . i=0 , i=1 , i=2
+//     setTimeout(() => console.log(i), 1);
+//   }
 
 // answer -> 333, 012
 
 //3rd question
-const shape = {
-    radius: 10,
-    diameter() {
-      return this.radius * 2;
-    },
-    perimeter: () => 2 * Math.PI * this.radius,
-  };
-  
-  console.log(shape.diameter());
-  console.log(shape.perimeter());
+// const shape = {
+//     radius: 10,
+//     diameter() {
+//       return this.radius * 2;
+//     },
+//     perimeter: () => 2 * Math.PI * this.radius,
+//   };
+
+//   console.log(shape.diameter());
+//   console.log(shape.perimeter());
 
 //   answer 20, 20Pi
 
 //4th question
-const bird = {
-    size: 'small',
-  };
-  
-  const mouse = {
-    name: 'Mickey',
-    small: true,
-  };
-  
-// options: 
+// const bird = {
+//     size: 'small',
+//   };
+
+//   const mouse = {
+//     name: 'Mickey',
+//     small: true,
+//   };
+
+// options:
 // A: mouse.bird.size is not valid
 // B: mouse[small] is not valid
 // C: mouse[bird["size"]] is not valid
@@ -57,23 +57,156 @@ const bird = {
 
 //5th question
 
-const person = { name: 'Yogesh' };
+// const person = { name: 'Yogesh' };
 
-function sayHi(age) {
-  return `${this.name} is ${age}`;
+// function sayHi(age) {
+//   return `${this.name} is ${age}`;
+// }
+
+// console.log(sayHi.call(person, 21));
+// console.log(sayHi.bind(person, 21));
+
+//6th question
+
+// const firstPromise = new Promise((res, rej) => {
+//     setTimeout(res, 500, 'one');
+//   });
+
+//   const secondPromise = new Promise((res, rej) => {
+//     setTimeout(res, 100, 'two');
+//   });
+
+//   Promise.race([firstPromise, secondPromise]).then(res => console.log(res));
+
+//ans - two
+
+//7th ques
+//type coercion
+//   console.log(1 + '2' + '2');  // 122
+// console.log(1 + +'2' + '2'); // 3+'2' -> 32
+// console.log(1 - '1' + '2'); // 02
+// console.log(1 + -'1' + '2'); // 1 + -1 -> 0 + '2' -> 02
+// console.log(+'1' + '1' + '2'); // 112
+
+//8th ques
+// var message = "yoyo"
+// const obj = {
+//   message: 'Hello',
+//   greet() {
+//     setTimeout(()=> {
+//       console.log(this.message);
+//     }, 1000);
+//   }
+// };
+
+// obj.greet(); //this -> obj
+//this -> global object
+//arrow functions do no thave their own this , their this is equal to -> parent's this
+
+//answer -> ud
+
+// this of greet -> obj
+
+//9th ques
+// console.log(typeof null);   // ? obj
+// console.log(typeof undefined); // ? ud
+
+// console.log(typeof typeof null);   // ? string
+// console.log(typeof typeof undefined); // ? string
+
+//10th ques
+// const arr = [1, 2, 3];
+// arr[10] = 99;
+// console.log(arr.length); // 11
+// console.log(arr);        // sparse arr [1,2,3, empty , 99]
+
+//11 th ques
+// const nums = [1, 2, 3, 4];
+// const res = nums.map(num => {
+//   if (num % 2 === 0) return num * 2;
+// });
+// console.log(res);
+
+// ans -> [undefined,4,undefined,8]
+
+//12th ques
+// const names = ['john', 'JACK', 'Jill'];
+// const output = names.map(name => name.toLowerCase()).filter(n => n.startsWith('j'));
+// console.log(output);
+
+// //answer -> ["john", "jack", "jill"]
+
+//13th ques
+
+// const items = [1, 2, 3, 4, 5];
+// const result = items.reduce((acc, val) => {
+//   return acc + val;
+// }, 100);
+
+// console.log(result);
+
+// //ans -> 115
+
+//14th ques
+//currying
+// function multiply(a) {
+//   return function(b) {
+//     return a * b;
+//   }
+// }
+// console.log(multiply(2)(3));
+
+// ans - > 6
+
+//15th ques
+
+// const sum = a => b => c => a + b + c;
+// console.log(sum(1)(2)(3));
+
+// ans -> 6
+
+//16th ques
+//implement currying to add 3 numbers
+
+// function add(a){
+//   return function(b){
+//     return function (c) {
+//       return a+b+c;
+//     }
+//   }
+// }
+// console.log(add(2)(3)(12)) //=> 17
+
+//extend this for infinite numbers
+
+// function sum(a){
+//   if(a==undefined) return undefined
+//   let total = a; //2
+//   function inner (b){
+//     if(b==undefined) return total
+//     total=total+b; //5+12 -> 17
+//     return inner;
+//   }
+//   return inner;
+// }
+// console.log(sum());
+// console.log(sum(1)());
+// console.log(sum(2)(3)(12)())
+// console.log(sum(2)(3)(12)(23)())
+// console.log(sum(2)(3)())
+
+//we want no extra brakcets for function call
+
+function sum(a) {
+  let total = a;
+  function inner(b) {
+    // if(b==undefined) return total
+    total += b;
+    return inner;
+  }
+
+  inner.toString = () => total;
+  inner.valueOf = () => total;
+  return inner;
 }
-
-console.log(sayHi.call(person, 21));
-console.log(sayHi.bind(person, 21));
-
-//6th question 
-
-const firstPromise = new Promise((res, rej) => {
-    setTimeout(res, 500, 'one');
-  });
-  
-  const secondPromise = new Promise((res, rej) => {
-    setTimeout(res, 100, 'two');
-  });
-  
-  Promise.race([firstPromise, secondPromise]).then(res => console.log(res));
+console.log(sum(1)(2)(3));
